@@ -1,10 +1,6 @@
-interface CategoryCardProps {
-  image: string;
-  name: string;
-  label?: string;
-}
 
-const CategoryCard = ({ image, name, label }: CategoryCardProps) => {
+
+const CategoryCard = ({ image, name, label }) => {
   return (
     <div className="flex flex-col items-center gap-3 cursor-pointer group">
       <div className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-xl overflow-hidden shadow-md hover-lift">

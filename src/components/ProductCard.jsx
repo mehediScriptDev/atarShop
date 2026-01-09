@@ -1,14 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-interface ProductCardProps {
-  image: string;
-  name: string;
-  originalPrice: number;
-  salePrice: number;
-  discount: number;
-}
-
-const ProductCard = ({ image, name, originalPrice, salePrice, discount }: ProductCardProps) => {
+const ProductCard = ({ image, name, originalPrice, salePrice, discount }) => {
   return (
     <div className="bg-card rounded-xl overflow-hidden shadow-sm hover-lift border border-border">
       {/* Image Container */}
