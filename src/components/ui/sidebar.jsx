@@ -39,7 +39,7 @@ const SidebarProvider = React.forwardRef(({ defaultOpen = true, open: openProp, 
   const [_open, _setOpen] = React.useState(defaultOpen);
   const open = openProp ?? _open;
   const setOpen = React.useCallback(
-    (value: boolean | ((value: boolean) => boolean)) => {
+    (value) => {
       const openState = typeof value === "function" ? value(open) : value;
       if (setOpenProp) {
         setOpenProp(openState);
@@ -75,7 +75,7 @@ const SidebarProvider = React.forwardRef(({ defaultOpen = true, open: openProp, 
   // This makes it easier to style the sidebar with Tailwind classes.
   const state = open ? "expanded" : "collapsed";
 
-  const contextValue = React.useMemo<SidebarContext>(
+  const contextValue = React.useMemo(
     () => ({
       state,
       open,
@@ -131,11 +131,9 @@ const Sidebar = React.forwardRef(({ side = "left", variant = "sidebar", collapsi
           data-sidebar="sidebar"
           data-mobile="true"
           className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
-          style={
-            {
-              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-            } as React.CSSProperties
-          }
+          style={{
+            "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+          }}
           side={side}
         >
           <div className="flex h-full w-full flex-col">{children}</div>
@@ -493,11 +491,9 @@ const SidebarMenuSkeleton = React.forwardRef(({ className, showIcon = false, ...
       <Skeleton
         className="h-4 max-w-[--skeleton-width] flex-1"
         data-sidebar="menu-skeleton-text"
-        style={
-          {
-            "--skeleton-width": width,
-          } as React.CSSProperties
-        }
+        style={{
+          "--skeleton-width": width,
+        }}
       />
     </div>
   );
