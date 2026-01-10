@@ -8,6 +8,7 @@ const Header = () => {
       <div className="container">
         {/* Main Header Row */}
         <div className="flex items-center justify-between gap-6">
+          {/* <Search className="h-5 w-5" /> */}
           {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">

@@ -8,7 +8,7 @@ const HeroSection = () => {
       <div className="container py-6">
         <div className="relative rounded-2xl overflow-hidden">
           {/* Hero Image */}
-          <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[550px]">
+          <div className="relative h-[200px] sm:h-[400px] md:h-[300px] lg:h-[550px]">
             <img 
               src={heroImage}
               alt="Winter Collection"

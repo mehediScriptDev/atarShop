@@ -1,6 +1,8 @@
 import { Facebook, Instagram, Youtube, Twitter, Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
+
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="bg-primary text-primary-foreground py-12 mt-12">
       <div className="container">
@@ -77,7 +79,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-10 pt-6 text-center text-sm text-primary-foreground/60">
-          <p>© 2025 Believers. All rights reserved.</p>
+          <p>© {currentYear} Believers. All rights reserved.</p>
         </div>
       </div>
     </footer>

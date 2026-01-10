@@ -2,7 +2,7 @@ import { MapPin, Settings, ChevronDown } from "lucide-react";
 
 const TopBar = () => {
   return (
-    <div className="bg-topbar text-topbar-foreground py-2.5 text-sm">
+    <div className="bg-topbar text-topbar-foreground py-1.5 text-sm">
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity animate animate-pulse">
           <MapPin className="h-4 w-4" />
