@@ -11,9 +11,13 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-xl">B</span>
+              <span className="text-primary-foreground font-bold text-xl">
+                B
+              </span>
             </div>
-            <span className="text-2xl font-bold text-foreground tracking-tight">believers</span>
+            <span className="text-2xl font-bold text-foreground tracking-tight">
+              believers
+            </span>
           </div>
 
           {/* Search Bar */}
@@ -22,10 +26,10 @@ const Header = () => {
               <Input
                 type="text"
                 placeholder="Search for Products..."
-                className="w-full h-12 pl-4 pr-14 rounded-lg border-2 border-border focus:border-primary bg-background"
+                className="w-full h-12 pl-4 pr-14 rounded-lg outline-none bg-background"
               />
-              <Button 
-                size="icon" 
+              <Button
+                size="icon"
                 className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10 rounded-md"
               >
                 <Search className="h-5 w-5" />
@@ -47,7 +51,7 @@ const Header = () => {
             {/* Cart */}
             <div className="relative cursor-pointer hover:opacity-70 transition-opacity">
               <ShoppingBag className="h-7 w-7 text-foreground" />
-              <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
+              <span className="absolute -top-2 -right-2 bg-[#fd4b6b] border-2 border-white text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
                 0
               </span>
             </div>
@@ -62,8 +66,8 @@ const Header = () => {
               placeholder="Search for Products..."
               className="w-full h-11 pl-4 pr-12 rounded-lg border-2 border-border"
             />
-            <Button 
-              size="icon" 
+            <Button
+              size="icon"
               className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 rounded-md"
             >
               <Search className="h-4 w-4" />
