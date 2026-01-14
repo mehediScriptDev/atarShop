@@ -14,10 +14,10 @@ const navItems = [
 
 const Navigation = () => {
   return (
-    <nav className="bg-background border-b border-border py-3">
+    <nav className="hidden lg:block bg-background border-b border-border py-3">
       <div className="container flex items-center justify-between">
         {/* Nav Items */}
-        <ul className="hidden lg:flex items-center gap-6">
+        <ul className="flex items-center gap-6">
           {navItems.map((item, index) => (
             <li key={index}>
               <a 
@@ -30,13 +30,6 @@ const Navigation = () => {
             </li>
           ))}
         </ul>
-
-        {/* Mobile Menu Toggle */}
-        <button className="lg:hidden flex flex-col gap-1.5 p-2">
-          <span className="w-6 h-0.5 bg-foreground"></span>
-          <span className="w-6 h-0.5 bg-foreground"></span>
-          <span className="w-6 h-0.5 bg-foreground"></span>
-        </button>
 
         {/* Hotline */}
         <div className="flex items-center gap-2">
