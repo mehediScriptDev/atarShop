@@ -18,7 +18,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <TopCategories />
-        <PromoBanner />
+        {/* <PromoBanner /> */}
         <ProductSection />
       </main>
       <Footer />
