@@ -38,7 +38,7 @@ const products = [
 
 const ProductSection = () => {
   return (
-    <section className="py-8 md:py-12">
+    <section className="py-8">
       <div className="container">
         {/* Sneakers Banner */}
         <div className="relative rounded-2xl overflow-hidden mb-8 h-[180px] md:h-[250px]">

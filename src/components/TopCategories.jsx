@@ -23,7 +23,7 @@ const categories = [
 
 const TopCategories = () => {
   return (
-    <section className="py-12 md:py-16">
+    <section className="py-10">
       <div className="container">
         {/* Section Title */}
         <div className="flex items-center justify-center gap-4 mb-10">
@@ -37,7 +37,7 @@ const TopCategories = () => {
         {/* Categories Grid */}
         <div className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8">
           {categories.map((category, index) => (
-            <CategoryCard 
+            <CategoryCard
               key={index}
               image={category.image}
               name={category.name}
