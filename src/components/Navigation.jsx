@@ -1,31 +1,40 @@
-import { Link } from "react-router-dom";
-import { ChevronDown, Phone } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Phone } from "lucide-react";
 
 const navItems = [
-  { name: "Attar", path: "/shop?category=Attar" },
-  { name: "Shirt", path: "/shop" },
-  { name: "Panjabi", path: "/shop?category=Panjabi" },
-  { name: "T-shirt", path: "/shop?category=T-Shirt" },
-  { name: "Pant & Trouser", path: "/shop?category=Pant+%26+Trouser" },
-  { name: "Winter", path: "/shop?category=Winter" },
-  { name: "Sneakers", path: "/shop?category=Sneakers" },
-  { name: "Polo Shirt", path: "/shop?category=Polo+Shirt" },
-  { name: "All Products", path: "/shop" },
+  { name: "Attar", category: "Attar" },
+  { name: "Panjabi", category: "Panjabi" },
+  { name: "T-shirt", category: "T-Shirt" },
+  { name: "Pant & Trouser", category: "Pant & Trouser" },
+  { name: "Winter", category: "Winter" },
+  { name: "Sneakers", category: "Sneakers" },
+  { name: "Polo Shirt", category: "Polo Shirt" },
+  { name: "All Products", category: "" },
 ];
 
 const Navigation = () => {
+  const navigate = useNavigate();
+
+  const handleClick = (category) => {
+    if (category) {
+      navigate(`/shop?category=${encodeURIComponent(category)}`);
+    } else {
+      navigate("/shop");
+    }
+  };
+
   return (
     <nav className="hidden lg:block bg-background border-b border-border py-3">
       <div className="container flex items-center justify-between">
         <ul className="flex items-center gap-6">
           {navItems.map((item, index) => (
             <li key={index}>
-              <Link
-                to={item.path}
-                className="flex items-center gap-1 text-foreground hover:text-accent transition-colors font-medium text-sm"
+              <button
+                onClick={() => handleClick(item.category)}
+                className="text-foreground hover:text-accent transition-colors font-medium text-sm"
               >
                 {item.name}
-              </Link>
+              </button>
             </li>
           ))}
         </ul>

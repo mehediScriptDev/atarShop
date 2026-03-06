@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { products, categories } from "@/data/products";
 import TopBar from "@/components/TopBar";
@@ -20,11 +20,23 @@ import { SlidersHorizontal, X, ChevronRight, Search } from "lucide-react";
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get("category") || "";
+  const searchParam = searchParams.get("search") || "";
   const [selectedCategory, setSelectedCategory] = useState(categoryParam);
   const [sortBy, setSortBy] = useState("default");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(searchParam);
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState([0, 10000]);
+
+  // Sync state with URL when search params change (e.g. clicking navbar links)
+  useEffect(() => {
+    setSelectedCategory(categoryParam);
+  }, [categoryParam]);
+
+  useEffect(() => {
+    if (searchParam) {
+      setSearchQuery(searchParam);
+    }
+  }, [searchParam]);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];

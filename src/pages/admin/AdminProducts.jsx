@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAdmin } from "@/context/AdminContext";
 import { categories } from "@/data/products";
 import { Button } from "@/components/ui/button";
@@ -28,7 +28,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Search, Plus, Pencil, Trash2 } from "lucide-react";
+import { Search, Plus, Pencil, Trash2, Upload, X, ImagePlus } from "lucide-react";
 import { toast } from "sonner";
 
 const emptyForm = {
@@ -53,6 +53,8 @@ const AdminProducts = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [form, setForm] = useState(emptyForm);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const fileInputRef = useRef(null);
 
   const filteredProducts = adminProducts.filter((p) => {
     const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -63,6 +65,7 @@ const AdminProducts = () => {
   const openAddForm = () => {
     setEditingProduct(null);
     setForm(emptyForm);
+    setImagePreviews([]);
     setShowForm(true);
   };
 
@@ -81,7 +84,37 @@ const AdminProducts = () => {
       sizes: product.sizes.join(", "),
       colors: product.colors.map((c) => c.name).join(", "),
     });
+    // Show existing product images as previews
+    setImagePreviews(product.images || []);
     setShowForm(true);
+  };
+
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    files.forEach((file) => {
+      if (!file.type.startsWith("image/")) {
+        toast.error(`"${file.name}" is not a valid image`);
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error(`"${file.name}" is too large (max 5MB)`);
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImagePreviews((prev) => [...prev, event.target.result]);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Reset input so same file can be re-selected
+    e.target.value = "";
+  };
+
+  const removeImage = (index) => {
+    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = () => {
@@ -109,7 +142,7 @@ const AdminProducts = () => {
             hex: "#808080",
           })).filter((c) => c.name)
         : [],
-      images: editingProduct?.images || [],
+      images: imagePreviews,
       featured: editingProduct?.featured || false,
     };
 
@@ -264,6 +297,55 @@ const AdminProducts = () => {
             <DialogTitle>{editingProduct ? "Edit Product" : "Add New Product"}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
+            {/* Image Upload */}
+            <div>
+              <Label className="mb-2 block">Product Images</Label>
+
+              {/* Preview Grid */}
+              {imagePreviews.length > 0 && (
+                <div className="grid grid-cols-4 gap-2 mb-3">
+                  {imagePreviews.map((src, i) => (
+                    <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-muted group">
+                      <img src={src} alt={`Preview ${i + 1}`} className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(i)}
+                        className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Upload Button */}
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageUpload}
+                accept="image/*"
+                multiple
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full border-2 border-dashed border-border rounded-xl p-6 flex flex-col items-center gap-2 hover:border-primary hover:bg-muted/30 transition-all cursor-pointer group"
+              >
+                <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                  <ImagePlus className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </div>
+                <div className="text-center">
+                  <p className="text-sm font-medium text-foreground">Click to upload images</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">PNG, JPG, WEBP up to 5MB</p>
+                </div>
+              </button>
+              {imagePreviews.length > 0 && (
+                <p className="text-xs text-muted-foreground mt-1.5">{imagePreviews.length} image{imagePreviews.length > 1 ? "s" : ""} selected</p>
+              )}
+            </div>
+
             <div>
               <Label>Product Name *</Label>
               <Input
