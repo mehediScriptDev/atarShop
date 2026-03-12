@@ -1,24 +1,19 @@
 import { Link } from "react-router-dom";
 
-const CategoryCard = ({ image, name, label }) => {
+const CategoryCard = ({ image, name }) => {
   return (
     <Link
       to={`/shop?category=${encodeURIComponent(name)}`}
-      className="flex flex-col items-center gap-3 cursor-pointer group"
+      className="flex flex-col items-center gap-2 cursor-pointer group"
     >
-      <div className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-xl overflow-hidden shadow-md hover-lift">
+      <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-white shadow-sm border border-border group-hover:border-primary transition-colors">
         <img
           src={image}
           alt={name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
-        {label && (
-          <div className="absolute top-2 left-2 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-2 py-1 rounded">
-            {label}
-          </div>
-        )}
       </div>
-      <span className="font-medium text-foreground text-sm md:text-base text-center">
+      <span className="font-medium text-foreground text-[10px] sm:text-xs md:text-sm text-center line-clamp-2 max-w-[80px] sm:max-w-[100px]">
         {name}
       </span>
     </Link>

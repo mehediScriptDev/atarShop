@@ -1,5 +1,4 @@
 import { Link, useSearchParams } from "react-router-dom";
-import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -13,7 +12,6 @@ const OrderConfirmation = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-50 shadow-sm bg-background">
-        <TopBar />
         <Header />
         <Navigation />
       </div>

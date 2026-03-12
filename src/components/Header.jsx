@@ -57,9 +57,9 @@ const Header = () => {
 
           <Link to="/" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-base">B</span>
+              <span className="text-primary-foreground font-bold text-base">SC</span>
             </div>
-            <span className="text-lg font-bold text-foreground tracking-tight">believers</span>
+            <span className="text-lg font-bold text-foreground tracking-tight">SunnahCircle</span>
           </Link>
 
           <div className="flex items-center gap-2">
@@ -106,9 +106,9 @@ const Header = () => {
               <div className="p-5 border-b border-border flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                    <span className="text-primary-foreground font-bold">B</span>
+                    <span className="text-primary-foreground font-bold">SC</span>
                   </div>
-                  <span className="font-bold text-foreground text-lg">believers</span>
+                  <span className="font-bold text-foreground text-lg">SunnahCircle</span>
                 </div>
                 <button onClick={() => setMobileMenuOpen(false)} className="p-1 hover:bg-muted rounded-lg">
                   <X className="h-5 w-5" />
@@ -144,9 +144,9 @@ const Header = () => {
           <div className="flex items-center justify-between gap-6">
             <Link to="/" className="flex items-center gap-2">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xl">B</span>
+                <span className="text-primary-foreground font-bold text-xl">SC</span>
               </div>
-              <span className="text-2xl font-bold text-foreground tracking-tight">believers</span>
+              <span className="text-2xl font-bold text-foreground tracking-tight">SunnahCircle</span>
             </Link>
 
             <div className="flex-1 max-w-2xl">

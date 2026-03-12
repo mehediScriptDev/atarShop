@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import { useAdmin } from "@/context/AdminContext";
-import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -94,7 +93,6 @@ const Checkout = () => {
     return (
       <div className="min-h-screen bg-background">
         <div className="sticky top-0 z-50 shadow-sm bg-background">
-          <TopBar />
           <Header />
           <Navigation />
         </div>
@@ -115,7 +113,6 @@ const Checkout = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-50 shadow-sm bg-background">
-        <TopBar />
         <Header />
         <Navigation />
       </div>

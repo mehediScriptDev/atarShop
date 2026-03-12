@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 227 15% 95%; /* #eff0f5 roughly */
     --foreground: 220 20% 10%;
 
     --card: 0 0% 100%;
@@ -15,16 +15,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 20% 10%;
 
-    --primary: 220 20% 12%;
+    --primary: 19 95% 50%; /* #f85606 - Daraz Orange */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 160 30% 94%;
-    --secondary-foreground: 220 20% 12%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 220 20% 10%;
 
     --muted: 210 20% 96%;
     --muted-foreground: 220 10% 45%;
 
-    --accent: 165 40% 45%;
+    --accent: 19 95% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -32,21 +32,21 @@
 
     --border: 220 13% 90%;
     --input: 220 13% 90%;
-    --ring: 220 20% 12%;
+    --ring: 19 95% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.3rem; /* Daraz has slightly sharper corners */
 
-    --top-bar: 220 20% 12%;
-    --top-bar-foreground: 0 0% 100%;
+    --top-bar: 0 0% 100%;
+    --top-bar-foreground: 220 20% 10%;
 
     --mint: 160 35% 92%;
     --mint-dark: 160 40% 40%;
 
-    --sale-badge: 220 20% 12%;
+    --sale-badge: 19 95% 50%;
     --sale-badge-foreground: 0 0% 100%;
 
     --price-original: 220 10% 55%;
-    --price-sale: 220 20% 12%;
+    --price-sale: 19 95% 50%;
   }
 
   .dark {

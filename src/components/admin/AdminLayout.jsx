@@ -44,7 +44,7 @@ const AdminLayout = () => {
         </button>
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 bg-primary rounded-lg flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">B</span>
+            <span className="text-primary-foreground font-bold text-sm">SC</span>
           </div>
           <span className="font-bold text-foreground">Admin Panel</span>
         </div>
@@ -90,10 +90,10 @@ const SidebarContent = ({ isActive, handleLogout, onClose, stats }) => (
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-lg">B</span>
+            <span className="text-primary-foreground font-bold text-lg">SC</span>
           </div>
           <div>
-            <p className="font-bold text-foreground text-lg">Believers</p>
+            <p className="font-bold text-foreground text-lg">SunnahCircle</p>
             <p className="text-xs text-muted-foreground">Admin Panel</p>
           </div>
         </div>

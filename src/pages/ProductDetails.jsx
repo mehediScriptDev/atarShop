@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getProductById, getProductsByCategory } from "@/data/products";
 import { useCart } from "@/context/CartContext";
-import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -36,7 +35,6 @@ const ProductDetails = () => {
     return (
       <div className="min-h-screen bg-background">
         <div className="sticky top-0 z-50 shadow-sm bg-background">
-          <TopBar />
           <Header />
           <Navigation />
         </div>
@@ -87,7 +85,6 @@ const ProductDetails = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-50 shadow-sm bg-background">
-        <TopBar />
         <Header />
         <Navigation />
       </div>

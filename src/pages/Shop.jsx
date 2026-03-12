@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { products, categories } from "@/data/products";
-import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -98,7 +97,6 @@ const Shop = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-50 shadow-sm bg-background">
-        <TopBar />
         <Header />
         <Navigation />
       </div>
@@ -177,9 +175,9 @@ const Shop = () => {
                   <div className="space-y-1">
                     <button
                       onClick={() => handleCategoryChange("")}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                      className={`w-full text-left px-3 py-2 rounded-md text-sm transition-all duration-200 ${
                         !selectedCategory
-                          ? "bg-primary text-primary-foreground"
+                          ? "bg-primary/10 text-primary font-bold border-l-4 border-primary pl-2"
                           : "text-muted-foreground hover:bg-muted"
                       }`}
                     >
@@ -189,9 +187,9 @@ const Shop = () => {
                       <button
                         key={cat}
                         onClick={() => handleCategoryChange(cat)}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                        className={`w-full text-left px-3 py-2 rounded-md text-sm transition-all duration-200 ${
                           selectedCategory === cat
-                            ? "bg-primary text-primary-foreground"
+                            ? "bg-primary/10 text-primary font-bold border-l-4 border-primary pl-2"
                             : "text-muted-foreground hover:bg-muted"
                         }`}
                       >

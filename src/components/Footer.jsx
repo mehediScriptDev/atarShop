@@ -1,85 +1,93 @@
 import { Facebook, Instagram, Youtube, Twitter, Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
-
   const currentYear = new Date().getFullYear();
+  
   return (
-    <footer className="bg-primary text-primary-foreground py-12 mt-12">
+    <footer className="bg-[#2e2e2e] text-white py-12 mt-12">
       <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-primary-foreground rounded-lg flex items-center justify-center">
-                <span className="text-primary font-bold text-xl">B</span>
+          <div className="space-y-6">
+            <Link to="/" className="flex items-center gap-2">
+              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">SC</span>
               </div>
-              <span className="text-2xl font-bold tracking-tight">believers</span>
-            </div>
-            <p className="text-primary-foreground/80 text-sm mb-4">
-              Your trusted destination for quality fashion and lifestyle products.
+              <span className="text-2xl font-bold tracking-tight">SunnahCircle</span>
+            </Link>
+            <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+              Experience the best in fashion and lifestyle. We bring you premium quality products from around the world.
             </p>
-            <div className="flex gap-3">
-              <a href="#" className="w-9 h-9 bg-primary-foreground/10 rounded-full flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a href="#" className="w-9 h-9 bg-primary-foreground/10 rounded-full flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-                <Instagram className="h-4 w-4" />
-              </a>
-              <a href="#" className="w-9 h-9 bg-primary-foreground/10 rounded-full flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-                <Youtube className="h-4 w-4" />
-              </a>
-              <a href="#" className="w-9 h-9 bg-primary-foreground/10 rounded-full flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
-                <Twitter className="h-4 w-4" />
-              </a>
+            <div className="flex gap-4">
+              {[Facebook, Instagram, Youtube, Twitter].map((Icon, i) => (
+                <a 
+                  key={i} 
+                  href="#" 
+                  className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-primary transition-colors border border-white/10"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Customer Care */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-sm text-primary-foreground/80">
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Store Locations</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Career</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">FAQs</a></li>
+            <h4 className="font-semibold text-lg mb-6 border-b border-primary w-fit pb-1">Customer Care</h4>
+            <ul className="space-y-3 text-sm text-gray-400">
+              <li><Link to="/help" className="hover:text-primary transition-colors">Help Center</Link></li>
+              <li><Link to="/how-to-buy" className="hover:text-primary transition-colors">How to Buy</Link></li>
+              <li><Link to="/returns" className="hover:text-primary transition-colors">Returns & Refunds</Link></li>
+              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
+              <li><Link to="/terms" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
             </ul>
           </div>
 
-          {/* Categories */}
+          {/* SunnahCircle */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Categories</h4>
-            <ul className="space-y-2 text-sm text-primary-foreground/80">
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">T-Shirts</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Panjabi</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Sneakers</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Winter Collection</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Accessories</a></li>
+            <h4 className="font-semibold text-lg mb-6 border-b border-primary w-fit pb-1">SunnahCircle</h4>
+            <ul className="space-y-3 text-sm text-gray-400">
+              <li><Link to="/about" className="hover:text-primary transition-colors">About Us</Link></li>
+              <li><Link to="/shop" className="hover:text-primary transition-colors">Digital Payments</Link></li>
+              <li><Link to="/careers" className="hover:text-primary transition-colors">Careers</Link></li>
+              <li><Link to="/blog" className="hover:text-primary transition-colors">SunnahCircle Blog</Link></li>
+              <li><Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contact Details */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Contact Us</h4>
-            <ul className="space-y-3 text-sm text-primary-foreground/80">
-              <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4" />
+            <h4 className="font-semibold text-lg mb-6 border-b border-primary w-fit pb-1">Contact Details</h4>
+            <ul className="space-y-4 text-sm text-gray-400">
+              <li className="flex items-center gap-3 group">
+                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-primary transition-colors">
+                  <Phone className="h-4 w-4 text-white" />
+                </div>
                 <span>09638090000</span>
               </li>
-              <li className="flex items-center gap-2">
-                <Mail className="h-4 w-4" />
-                <span>support@believers.com</span>
+              <li className="flex items-center gap-3 group">
+                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-primary transition-colors">
+                  <Mail className="h-4 w-4 text-white" />
+                </div>
+                <span>support@sunnahcircle.com</span>
               </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 mt-0.5" />
+              <li className="flex items-start gap-3 group">
+                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-primary transition-colors">
+                  <MapPin className="h-4 w-4 text-white" />
+                </div>
                 <span>Dhaka, Bangladesh</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/20 mt-10 pt-6 text-center text-sm text-primary-foreground/60">
-          <p>© {currentYear} Believers. All rights reserved.</p>
+        <div className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+          <p>© {currentYear} SunnahCircle. All rights reserved.</p>
+          <div className="flex gap-6">
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
+          </div>
         </div>
       </div>
     </footer>

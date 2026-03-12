@@ -23,25 +23,19 @@ const categories = [
 
 const TopCategories = () => {
   return (
-    <section className="py-10">
+    <section className="py-6 sm:py-8 bg-white mt-4">
       <div className="container">
-        {/* Section Title */}
-        <div className="flex items-center justify-center gap-4 mb-10">
-          <div className="h-px bg-border flex-1 max-w-[100px] md:max-w-[200px]" />
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground tracking-tight">
-            TOP CATEGORIES
-          </h2>
-          <div className="h-px bg-border flex-1 max-w-[100px] md:max-w-[200px]" />
-        </div>
+        <h2 className="text-base md:text-lg font-medium text-[#212121] mb-4">
+          Categories
+        </h2>
 
         {/* Categories Grid */}
-        <div className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-2 sm:gap-4 justify-items-center">
           {categories.map((category, index) => (
             <CategoryCard
               key={index}
               image={category.image}
               name={category.name}
-              label={category.label}
             />
           ))}
         </div>

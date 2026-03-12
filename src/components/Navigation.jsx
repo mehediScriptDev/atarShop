@@ -31,7 +31,7 @@ const Navigation = () => {
             <li key={index}>
               <button
                 onClick={() => handleClick(item.category)}
-                className="text-foreground hover:text-accent transition-colors font-medium text-sm"
+                className="text-[#212121] hover:text-primary transition-colors font-medium text-sm uppercase tracking-wide"
               >
                 {item.name}
               </button>
@@ -39,11 +39,11 @@ const Navigation = () => {
           ))}
         </ul>
 
-        <div className="flex items-center gap-2">
-          <Phone className="h-5 w-5 text-accent" />
+        <div className="flex items-center gap-3">
+          <Phone className="h-5 w-5 text-primary" />
           <div className="text-sm">
-            <p className="text-muted-foreground text-xs">Hotline:</p>
-            <p className="font-semibold text-foreground">09638090000</p>
+            <p className="text-gray-500 text-[10px] sm:text-xs">Hotline:</p>
+            <p className="font-bold text-[#212121]">09638090000</p>
           </div>
         </div>
       </div>
