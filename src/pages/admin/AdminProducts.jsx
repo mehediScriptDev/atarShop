@@ -166,7 +166,24 @@ const AdminProducts = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm((prev) => {
+      const newForm = { ...prev, [name]: value };
+      
+      // Auto-calculate discount if originalPrice or salePrice changes
+      if (name === "originalPrice" || name === "salePrice") {
+        const original = parseFloat(name === "originalPrice" ? value : prev.originalPrice);
+        const sale = parseFloat(name === "salePrice" ? value : prev.salePrice);
+        
+        if (original && sale && original > sale) {
+          const discount = Math.round(((original - sale) / original) * 100);
+          newForm.discount = String(discount);
+        } else if (original && sale && original <= sale) {
+          newForm.discount = "0";
+        }
+      }
+      
+      return newForm;
+    });
   };
 
   return (
@@ -292,27 +309,28 @@ const AdminProducts = () => {
 
       {/* Add/Edit Product Dialog */}
       <Dialog open={showForm} onOpenChange={setShowForm}>
-        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>{editingProduct ? "Edit Product" : "Add New Product"}</DialogTitle>
+        <DialogContent className="max-w-lg p-0 overflow-hidden flex flex-col h-[90vh] sm:h-[85vh] sm:rounded-2xl border-none shadow-2xl">
+          <DialogHeader className="px-6 py-4 border-b border-border/50 bg-background flex-shrink-0">
+            <DialogTitle className="text-xl">{editingProduct ? "Edit Product" : "Add New Product"}</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-2">
+          
+          <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
             {/* Image Upload */}
-            <div>
-              <Label className="mb-2 block">Product Images</Label>
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-foreground">Product Images</Label>
 
               {/* Preview Grid */}
               {imagePreviews.length > 0 && (
-                <div className="grid grid-cols-4 gap-2 mb-3">
+                <div className="grid grid-cols-4 gap-2.5">
                   {imagePreviews.map((src, i) => (
-                    <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-muted group">
-                      <img src={src} alt={`Preview ${i + 1}`} className="w-full h-full object-cover" />
+                    <div key={i} className="relative aspect-square rounded-xl overflow-hidden bg-muted group border border-border">
+                      <img src={src} alt={`Preview ${i + 1}`} className="w-full h-full object-cover transition-transform group-hover:scale-110" />
                       <button
                         type="button"
                         onClick={() => removeImage(i)}
-                        className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                        className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:bg-red-600 scale-75 group-hover:scale-100"
                       >
-                        <X className="h-3 w-3" />
+                        <X className="h-3.5 w-3.5" />
                       </button>
                     </div>
                   ))}
@@ -331,147 +349,164 @@ const AdminProducts = () => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full border-2 border-dashed border-border rounded-xl p-6 flex flex-col items-center gap-2 hover:border-primary hover:bg-muted/30 transition-all cursor-pointer group"
+                className="w-full border-2 border-dashed border-border rounded-2xl p-8 flex flex-col items-center gap-3 hover:border-primary hover:bg-primary/5 transition-all cursor-pointer group bg-muted/20"
               >
-                <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                  <ImagePlus className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                  <ImagePlus className="h-6 w-6 text-primary" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-foreground">Click to upload images</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">PNG, JPG, WEBP up to 5MB</p>
+                  <p className="text-sm font-bold text-foreground">Click to upload images</p>
+                  <p className="text-xs text-muted-foreground mt-1">PNG, JPG, WEBP up to 5MB</p>
                 </div>
               </button>
               {imagePreviews.length > 0 && (
-                <p className="text-xs text-muted-foreground mt-1.5">{imagePreviews.length} image{imagePreviews.length > 1 ? "s" : ""} selected</p>
+                <p className="text-[10px] uppercase tracking-wider font-bold text-primary px-1">{imagePreviews.length} image{imagePreviews.length > 1 ? "s" : ""} selected</p>
               )}
             </div>
 
-            <div>
-              <Label>Product Name *</Label>
-              <Input
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Product name"
-                className="mt-1.5"
-              />
-            </div>
-            <div>
-              <Label>Category *</Label>
-              <Select
-                value={form.category}
-                onValueChange={(val) => setForm((prev) => ({ ...prev, category: val }))}
-              >
-                <SelectTrigger className="mt-1.5">
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid grid-cols-3 gap-3">
-              <div>
-                <Label>Original Price</Label>
+            <div className="grid gap-5">
+              <div className="space-y-2">
+                <Label htmlFor="product-name" className="text-sm font-semibold">Product Name *</Label>
                 <Input
-                  name="originalPrice"
-                  type="number"
-                  value={form.originalPrice}
+                  id="product-name"
+                  name="name"
+                  value={form.name}
                   onChange={handleChange}
-                  placeholder="৳0"
-                  className="mt-1.5"
+                  placeholder="Enter product name"
+                  className="h-11 rounded-xl"
                 />
               </div>
-              <div>
-                <Label>Sale Price *</Label>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold">Category *</Label>
+                <Select
+                  value={form.category}
+                  onValueChange={(val) => setForm((prev) => ({ ...prev, category: val }))}
+                >
+                  <SelectTrigger className="h-11 rounded-xl">
+                    <SelectValue placeholder="Select a category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((cat) => (
+                      <SelectItem key={cat} value={cat} className="rounded-lg my-0.5">
+                        {cat}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold">Original Price</Label>
+                  <Input
+                    name="originalPrice"
+                    type="number"
+                    value={form.originalPrice}
+                    onChange={handleChange}
+                    placeholder="৳0"
+                    className="h-11 rounded-xl"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold">Sale Price *</Label>
+                  <Input
+                    name="salePrice"
+                    type="number"
+                    value={form.salePrice}
+                    onChange={handleChange}
+                    placeholder="৳0"
+                    className="h-11 rounded-xl"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold">Discount %</Label>
+                  <Input
+                    name="discount"
+                    type="number"
+                    value={form.discount}
+                    onChange={handleChange}
+                    placeholder="0"
+                    className="h-11 rounded-xl bg-muted/30"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold">Stock Amount</Label>
+                  <Input
+                    name="stock"
+                    type="number"
+                    value={form.stock}
+                    onChange={handleChange}
+                    placeholder="0"
+                    className="h-11 rounded-xl"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold">Initial Rating</Label>
+                  <Input
+                    name="rating"
+                    type="number"
+                    step="0.1"
+                    value={form.rating}
+                    onChange={handleChange}
+                    placeholder="4.5"
+                    className="h-11 rounded-xl"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold">Available Sizes (comma-separated)</Label>
                 <Input
-                  name="salePrice"
-                  type="number"
-                  value={form.salePrice}
+                  name="sizes"
+                  value={form.sizes}
                   onChange={handleChange}
-                  placeholder="৳0"
-                  className="mt-1.5"
+                  placeholder="e.g. S, M, L, XL"
+                  className="h-11 rounded-xl"
                 />
               </div>
-              <div>
-                <Label>Discount %</Label>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold">Available Colors (comma-separated)</Label>
                 <Input
-                  name="discount"
-                  type="number"
-                  value={form.discount}
+                  name="colors"
+                  value={form.colors}
                   onChange={handleChange}
-                  placeholder="0"
-                  className="mt-1.5"
+                  placeholder="e.g. Black, White, Red"
+                  className="h-11 rounded-xl"
                 />
               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label>Stock</Label>
-                <Input
-                  name="stock"
-                  type="number"
-                  value={form.stock}
+
+              <div className="space-y-2 pb-2">
+                <Label className="text-sm font-semibold">Product Description</Label>
+                <textarea
+                  name="description"
+                  rows={4}
+                  value={form.description}
                   onChange={handleChange}
-                  placeholder="0"
-                  className="mt-1.5"
+                  placeholder="Describe your product in detail..."
+                  className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                 />
               </div>
-              <div>
-                <Label>Rating</Label>
-                <Input
-                  name="rating"
-                  type="number"
-                  step="0.1"
-                  value={form.rating}
-                  onChange={handleChange}
-                  placeholder="4.5"
-                  className="mt-1.5"
-                />
-              </div>
-            </div>
-            <div>
-              <Label>Sizes (comma-separated)</Label>
-              <Input
-                name="sizes"
-                value={form.sizes}
-                onChange={handleChange}
-                placeholder="S, M, L, XL"
-                className="mt-1.5"
-              />
-            </div>
-            <div>
-              <Label>Colors (comma-separated)</Label>
-              <Input
-                name="colors"
-                value={form.colors}
-                onChange={handleChange}
-                placeholder="Black, White, Red"
-                className="mt-1.5"
-              />
-            </div>
-            <div>
-              <Label>Description</Label>
-              <textarea
-                name="description"
-                rows={3}
-                value={form.description}
-                onChange={handleChange}
-                placeholder="Product description..."
-                className="mt-1.5 w-full rounded-lg border border-border bg-background px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ring"
-              />
             </div>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowForm(false)}>
+
+          <DialogFooter className="p-6 border-t border-border/50 bg-muted/10 flex-shrink-0">
+            <Button 
+              variant="outline" 
+              onClick={() => setShowForm(false)}
+              className="h-11 px-6 rounded-xl"
+            >
               Cancel
             </Button>
-            <Button onClick={handleSubmit}>
-              {editingProduct ? "Save Changes" : "Add Product"}
+            <Button 
+              onClick={handleSubmit}
+              className="h-11 px-8 rounded-xl bg-primary hover:bg-primary/90 transition-all shadow-md shadow-primary/20"
+            >
+              {editingProduct ? "Update Product" : "Publish Product"}
             </Button>
           </DialogFooter>
         </DialogContent>

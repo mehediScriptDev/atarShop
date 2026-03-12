@@ -55,6 +55,52 @@ const Checkout = () => {
     }
   };
 
+  const handleWhatsAppOrder = (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    
+    const phoneNumber = "+8801834393787"; // Replace with actual seller number
+    const itemsList = cartItems.map(item => 
+      `• ${item.name}${item.selectedSize ? ` (Size: ${item.selectedSize})` : ""}${item.selectedColor ? ` (Color: ${item.selectedColor})` : ""} x${item.quantity} = ৳${item.salePrice * item.quantity}`
+    ).join("\n");
+    
+    const message = `*New Order from SunnahCircle*\n\n` +
+      `*Customer Details:*\n` +
+      `Name: ${form.name}\n` +
+      `Phone: ${form.phone}\n` +
+      `Address: ${form.address}, ${form.area ? form.area + ", " : ""}${form.city}\n` +
+      `${form.note ? `Note: ${form.note}\n` : ""}\n` +
+      `*Order Items:*\n${itemsList}\n\n` +
+      `*Summary:*\n` +
+      `Subtotal: ৳${cartTotal}\n` +
+      `Shipping: ${shipping === 0 ? "Free" : `৳${shipping}`}\n` +
+      `*Total: ৳${cartTotal + shipping}*\n\n` +
+      `Payment Method: ${form.paymentMethod === "cod" ? "Cash on Delivery" : form.paymentMethod.toUpperCase()}`;
+    
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Create actual order in admin for tracking if needed
+    addOrder({
+      customer: form.name,
+      email: form.email,
+      phone: form.phone,
+      address: `${form.address}, ${form.area ? form.area + ", " : ""}${form.city}`,
+      items: cartItems.map((item) => ({
+        name: item.name,
+        qty: item.quantity,
+        price: item.salePrice,
+        size: item.selectedSize,
+        color: item.selectedColor,
+      })),
+      total: cartTotal + shipping,
+      paymentMethod: "WhatsApp Order",
+    });
+
+    clearCart();
+    window.open(whatsappUrl, "_blank");
+    navigate(`/order-confirmation?orderId=WA-${Date.now()}`);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -314,23 +360,35 @@ const Checkout = () => {
                     </div>
                   </div>
 
-                  <Button
-                    type="submit"
-                    className="w-full h-12 text-base font-semibold gap-2"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2">
-                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Processing...
-                      </span>
-                    ) : (
-                      <>
-                        <Lock className="h-4 w-4" />
-                        Place Order — ৳{cartTotal + shipping}
-                      </>
-                    )}
-                  </Button>
+                  <div className="space-y-3">
+                    <Button
+                      type="submit"
+                      className="w-full h-12 text-base font-semibold gap-2"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center gap-2">
+                          <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Processing...
+                        </span>
+                      ) : (
+                        <>
+                          <Lock className="h-4 w-4" />
+                          Place Order — ৳{cartTotal + shipping}
+                        </>
+                      )}
+                    </Button>
+
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleWhatsAppOrder}
+                      className="w-full h-12 text-base font-semibold gap-2 border-green-500 text-green-600 hover:bg-green-50"
+                    >
+                      <Smartphone className="h-5 w-5" />
+                      Order via WhatsApp
+                    </Button>
+                  </div>
 
                   <p className="text-xs text-center text-muted-foreground">
                     By placing this order, you agree to our terms and conditions.
